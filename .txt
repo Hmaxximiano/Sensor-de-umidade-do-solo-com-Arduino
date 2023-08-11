@@ -1,0 +1,35 @@
+#define rele 3
+#define sensor 2
+
+bool irrigar = false;
+unsigned long previousMillis = 0;
+const unsigned long interval = 10000;
+
+void setup()
+{
+  pinMode(rele, OUTPUT);
+  pinMode(sensor, INPUT);
+  
+  digitalWrite(rele, HIGH);
+}
+
+void loop() 
+{
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval)
+  {
+    previousMillis = currentMillis;
+
+    irrigar = digitalRead(sensor);
+
+    if (irrigar)
+    {
+      digitalWrite(rele, LOW);
+      delay(5000);  // Ligar a irrigação por 5 segundos
+      digitalWrite(rele, HIGH);  // Desligar a irrigação
+    }
+  }
+
+  delay(10000);  // Aguardar 10 segundos antes da próxima leitura
+}
